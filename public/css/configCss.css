@@ -1,0 +1,30 @@
+.hidden
+{
+    display: none;
+}
+
+.btn-check-checked
+{
+    color: #fff!important;
+    background-color: #555c64!important;
+    border-color: #555c64!important;
+}
+
+.btm-margin-1
+{
+    margin-bottom: 5px;
+}
+
+.btm-margin-2
+{
+    margin-bottom: 10px;
+}
+
+.form-group .required label:after
+{
+    color: #d00;
+    content: "*";
+    position: absolute;
+    margin-left: 8px;
+    top: 3px;
+}

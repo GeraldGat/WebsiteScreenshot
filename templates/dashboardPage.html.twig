@@ -1,0 +1,64 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Dashboard{% endblock %}
+
+{% block page_title %}Dashboard{% endblock %}
+
+{% block page_content %}
+    <div class="row">
+        <div class="col-md-5 offset-md-1">
+            <div class="card">
+                <h2 class="card-header">Information</h2>
+                <div class="row card-body">
+                    <div class="col-12 form-group">
+                        <h3>Google Drive API</h3>
+                        <div class="row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Client ID</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control-sm form-control-plaintext" id="inputEmail3" placeholder="{{ idClient }}" disabled>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Secret</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control-sm form-control-plaintext" id="inputEmail3" placeholder="{{ secret }}" disabled>
+                            </div>
+                        </div>
+                        <h3>Screenshot Machine API</h3>
+                        <div class="row">
+                            <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Key</label>
+                            <div class="col-sm-9">
+                                <input type="text" class="form-control-sm form-control-plaintext" id="inputEmail3" placeholder="{{ screenshotUserKey }}" disabled>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-5">
+            <div class="card">
+                <h2 class="card-header">Website</h2>
+                <div class="row card-body">
+                    <table class="table table-hover">
+                        <thead class="thead-light">
+                            <tr>
+                                <th scope="col">Name</th>
+                                <th scope="col">Url</th>
+                                <th scope="col">Add date in name</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for website in websites %}
+                            <tr>
+                                <td>{{ website.name }}</td>
+                                <td>{{ website.url }}</td>
+                                <td>{{ website.addDateInName ? 'True' : 'False' }}</td>
+                            </tr>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+{% endblock %}

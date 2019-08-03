@@ -1,0 +1,193 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Config{% endblock %}
+
+{% block stylesheet %}
+    <link href="{{ asset('css/configCss.css') }}" rel="stylesheet"/>
+    {{ parent() }}
+{% endblock %}
+
+{% block page_title %}Config{% endblock %}
+
+{% block page_content %}
+    <form action="" method="POST">
+        <div class="row btm-margin-2">
+            <div class="col-md-5 offset-md-1">
+                <div class="card">
+                    <h2 class="card-header">Information</h2>
+                    <div class="row card-body">
+                        <div class="col-12 form-group">
+                            <h3>Google Drive API</h3>
+                            <div class="row required">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Client ID</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="idClient" class="form-control form-control-sm" value="{{ idClient }}" required>
+                                </div>
+                            </div>
+                            <div class="row required">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Secret</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="secret" class="form-control form-control-sm" value="{{ secret }}" required>
+                                </div>
+                            </div>
+                            <div class="row required">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Redirect url</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="redirectUri" class="form-control form-control-sm" value="{{ redirectUri }}" required>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Parents</label>
+                                <div class="col-sm-9 btm-margin-1">
+                                    <div class="row" id="parentsRow">
+                                        {% set countParents = 0 %}
+                                        {% for parent in parents %}
+                                            <div class="col-12 btm-margin-1 input-group-sm input-group mb-3" id="parent-{{ countParents }}">
+                                                <input type="text" name="parents[{{ countParents }}]" data-parentNumber="{{ countParents }}" class="form-control" value="{{ parent }}">
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-danger" onclick="removeParent({{ countParents }})"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </div>
+                                            {% set countParents = countParents + 1 %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row btm-margin-2">
+                                <div class="offset-lg-9 col-lg-3 offset-md-7 col-md-5 offset-7 col-5">
+                                    <button class="btn btn-primary form-control" id="addParent">Add</button>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Scopes</label>
+                                <div class="col-sm-9 btm-margin-1">
+                                    <div class="row" id="scopesRow">
+                                        {% set countScopes = 0 %}
+                                        {% for scope in scopes %}
+                                            <div class="col-12 btm-margin-1 input-group-sm input-group mb-3" id="scope-{{ countScopes }}">
+                                                <input type="text" name="scopes[{{ countScopes }}]" data-scopeNumber="{{ countScopes }}" class="form-control" value="{{ scope }}" required>
+                                                <div class="input-group-append">
+                                                    <button class="btn btn-outline-danger" onclick="removeScope({{ countScopes }})"><i class="fas fa-trash"></i></button>
+                                                </div>
+                                            </div>
+                                            {% set countScopes = countScopes + 1 %}
+                                        {% endfor %}
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row btm-margin-2">
+                                <div class="offset-lg-9 col-lg-3 offset-md-7 col-md-5 offset-7 col-5">
+                                    <button class="btn btn-primary form-control" id="addScope">Add</button>
+                                </div>
+                            </div>
+                            <h3>Screenshot Machine API</h3>
+                            <div class="row required">
+                                <label for="inputEmail3" class="col-sm-3 col-form-label-sm">Key</label>
+                                <div class="col-sm-9">
+                                    <input type="text" name="screenshotUserKey" class="form-control form-control-sm" value="{{ screenshotUserKey }}" required>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-5">
+                <div class="card">
+                    <h2 class="card-header">Website</h2>
+                    <div class="row card-body" id="websitesRow">
+                        {% set countWebsites = 0 %}
+                        {% for website in websites %}
+                            <div class="input-group btm-margin-1" id="website-{{ countWebsites }}">
+                                <input type="text" name="websites[{{ countWebsites }}][name]" data-websiteNumber="{{ countWebsites }}" class="form-control" placeholder="Name" value="{{ website.name }}" required>
+                                <input type="text" name="websites[{{ countWebsites }}][url]" data-websiteNumber="{{ countWebsites }}" class="form-control" placeholder="Url" value="{{ website.url }}" required>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-secondary btn-check{{ website.addDateInName ? ' btn-check-checked' }}" type="button">
+                                        <input type="checkbox" name="websites[{{ countWebsites }}][addDateInName]" data-websiteNumber="{{ countWebsites }}" class="hidden" {{ website.addDateInName ? 'checked="checked"' }}>Add date in name
+                                    </button>
+                                    <button class="btn btn-outline-danger" onclick="removeWebsite({{ countWebsites }})"><i class="fas fa-trash"></i></button>
+                                </div>
+                            </div>
+                            {% set countWebsites = countWebsites + 1 %}
+                        {% endfor %}
+                    </div>
+                    <div class="row btm-margin-2">
+                        <div class="offset-lg-9 col-lg-3 offset-md-7 col-md-5 offset-7 col-5">
+                            <button class="btn btn-primary form-control" id="addWebsite">Add</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="row">
+            <div class="offset-md-9 col-md-2 offset-lg-10 col-lg-1">
+                <input type="submit" class="btn btn-primary form-control" value="Save">
+            </div>
+        </div>
+    </form>
+{% endblock %}
+
+{% block body_javascript %}
+    {{ parent() }}
+
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('.btn-check').click(function() {
+                if($(this).find("input").prop('checked')) {
+                    $(this).find("input").prop('checked', false);
+                    $(this).removeClass("btn-check-checked");
+                } else {
+                    $(this).find("input").prop('checked', true);
+                    $(this).addClass("btn-check-checked");
+                }
+            });
+
+            $('#addParent').click(function() {
+                parentNode = '<div class="col-12 btm-margin-1 input-group-sm input-group mb-3" id="parent-__count__"><input type="text" name="parents[__count__]" data-parentNumber="__count__" class="form-control"><div class="input-group-append"><button class="btn btn-outline-danger" onclick="removeParent(__count__)"><i class="fas fa-trash"></i></button></div></div>';
+
+                countParents = Number($("#parentsRow input").last().attr("data-parentNumber")) + 1;
+                if(isNaN(countParents)) {
+                    countParents = 0;
+                }
+
+                newParentNode = parentNode.replace(/__count__/g, countParents);
+                $("#parentsRow").append(newParentNode);
+            });
+
+            $('#addScope').click(function() {
+                scopeNode = '<div class="col-12 btm-margin-1 input-group-sm input-group mb-3" id="scope-__count__"><input type="text" name="scopes[__count__]" data-scopeNumber="__count__" class="form-control" required><div class="input-group-append"><button class="btn btn-outline-danger" onclick="removeScope(__count__)"><i class="fas fa-trash"></i></button></div></div>';
+
+                countScopes = Number($("#scopesRow input").last().attr("data-scopeNumber")) + 1;
+                if(isNaN(countScopes)) {
+                    countScopes = 0;
+                }
+
+                newScopeNode = scopeNode.replace(/__count__/g, countScopes);
+                $("#scopesRow").append(newScopeNode);
+            });
+
+            $('#addWebsite').click(function() {
+                websiteNode = '<div class="input-group btm-margin-1" id="website-__count__"><input type="text" name="websites[__count__][name]" data-websiteNumber="__count__" class="form-control" placeholder="Name" required><input type="text" name="websites[__count__][url]" data-websiteNumber="__count__" class="form-control" placeholder="Url" required><div class="input-group-append"><button class="btn btn-outline-secondary btn-check" type="button"><input type="checkbox" name="websites[__count__][addDateInName]" data-websiteNumber="__count__" class="hidden">Add date in name</button><button class="btn btn-outline-danger" onclick="removeWebsite(__count__)"><i class="fas fa-trash"></i></button></div></div>';
+
+                countWebsites = Number($("#websitesRow input").last().attr("data-websiteNumber")) + 1;
+                if(isNaN(countWebsites)) {
+                    countWebsites = 0;
+                }
+
+                newWebsiteNode = websiteNode.replace(/__count__/g, countWebsites);
+                $("#websitesRow").append(newWebsiteNode);
+            });
+        });
+
+        function removeParent(id) {
+            $("#parent-" + id).remove();
+        }
+
+        function removeScope(id) {
+            $("#scope-" + id).remove();
+        }
+
+        function removeWebsite(id) {
+            $("#website-" + id).remove();
+        }
+    </script>
+{% endblock %}

@@ -1,0 +1,11 @@
+website_screenshot_dashboard:
+   path: /
+   controller: App\Controller\WebsiteScreenshotController::dashboard
+
+website_screenshot_configure:
+   path: /config
+   controller: App\Controller\WebsiteScreenshotController::config
+
+website_screenshot_make_screen:
+   path: /screen
+   controller: App\Controller\WebsiteScreenshotController::makeScreen

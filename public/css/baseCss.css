@@ -1,0 +1,15 @@
+.flash-error
+{
+    background-color: red;
+}
+
+.flash-success
+{
+    background-color: green;
+}
+
+.flash-success, .flash-error
+{
+    width: 100%;
+    text-align: center;
+}

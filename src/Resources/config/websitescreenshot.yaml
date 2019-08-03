@@ -1,0 +1,13 @@
+idClient: 'Your client Id on google api'
+secret: 'Your client secret on google api'
+redirectUri: 'For this project http://localhost:8000/screen (specified in google api)'
+parents:
+    - 'id of the folder on google drive'
+scopes:
+    - 'By default: https://www.googleapis.com/auth/drive.file'
+screenshotUserKey: 'Your screenshot machine key'
+websites:
+    -
+        name: 'Name on google drive'
+        url: 'Website Url'
+        addDateInName: false
